@@ -1,4 +1,7 @@
 import writerEffect from './writerEffect.js';
-document.addEventListener('DOMContentLoaded', ()=>{
-   console.log('javascript working ...')
+    document.addEventListener('DOMContentLoaded', ()=>{
+   const ground = document.querySelector('.content1')
+   const text = 'testing';
+    writerEffect(ground, text)
 })
+
