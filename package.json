@@ -1,0 +1,21 @@
+{
+  "name": "portfolio_template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngelDarco/Portfolio_Template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AngelDarco/Portfolio_Template/issues"
+  },
+  "homepage": "https://github.com/AngelDarco/Portfolio_Template#readme"
+}
