@@ -1,21 +1,11 @@
 {
   "name": "portfolio_template",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "module": "index.ts",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "@types/bun": "latest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AngelDarco/Portfolio_Template.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AngelDarco/Portfolio_Template/issues"
-  },
-  "homepage": "https://github.com/AngelDarco/Portfolio_Template#readme"
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
 }
