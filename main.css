@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card {
+    transition: background-position 6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
