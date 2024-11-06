@@ -1,0 +1,23 @@
+---
+import Card from "./Card.astro";
+const items = [
+  { title: "Login", body: "Login to your account" },
+  { title: "Register", body: "Register to your account" },
+  { title: "Cart", body: "View your cart" },
+  { title: "Orders", body: "View your orders" },
+  { title: "Profile", body: "View your profile" },
+  { title: "Logout", body: "Logout from your account" },
+  { title: "Login", body: "Login to your account" },
+  { title: "Register", body: "Register to your account" },
+  { title: "Cart", body: "View your cart" },
+  { title: "Orders", body: "View your orders" },
+  { title: "Profile", body: "View your profile" },
+  { title: "Logout", body: "Logout from your account" },
+];
+---
+
+<main
+  class="auto flex w-full flex-wrap items-center justify-center gap-4 border-2 border-white p-4"
+>
+  {items.map((item) => <Card title={item.title} body={item.body} />)}
+</main>
