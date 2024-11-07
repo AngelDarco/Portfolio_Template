@@ -1,7 +1,11 @@
-<!-- src/components/Header.astro -->
-<header>
+<header
+  id="header"
+  class="fixed left-0 top-0 z-50 w-full border-b border-white/20 bg-white/10 p-4 text-white shadow-lg backdrop-blur-sm"
+>
   <nav>
-    <ul>
+    <ul
+      class="[&>li>a]:decoration-none ] flex list-none gap-4 hover:[&>li>a]:underline"
+    >
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/blog">Blog</a></li>
@@ -9,25 +13,37 @@
     </ul>
   </nav>
 </header>
+<script>
+  (() => {
+    let lastScroll = 0;
+    const headerHeight = window.innerHeight * 0.1;
+    const header = document.getElementById("header") as HTMLElement;
+    header.style.transition = "all 0.3s ease-in-out";
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY < headerHeight) {
+        header.classList.add("header-top");
+        header.style.transform = "translateY(0)";
+        lastScroll = window.scrollY;
+        return;
+      }
+
+      header.classList.remove("header-top");
+
+      if (window.scrollY < lastScroll) {
+        header.style.transform = "translateY(-100%)";
+      } else {
+        header.style.transform = "translateY(0)";
+      }
+      lastScroll = window.scrollY;
+    });
+  })();
+</script>
 
 <style>
-  header {
-    background-color: #333;
+  .header-top {
+    all: revert;
+    color: white;
     padding: 1rem;
-    color: white;
-    position: sticky;
-    top: 0;
-  }
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-  }
-  nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  nav ul li a:hover {
-    text-decoration: underline;
   }
 </style>
