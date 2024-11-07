@@ -1,0 +1,45 @@
+<main
+  id="footer"
+  class="fixed bottom-0 left-0 z-50 h-10 w-full border-t border-white/20 bg-white/10 shadow-lg backdrop-blur-sm"
+>
+  <div class="h-full">ths is the footer</div>
+</main>
+
+<script>
+  (() => {
+    let lastScroll = 0;
+    const footer = document.getElementById("footer") as HTMLElement;
+    footer.style.transition = "all 0.3s ease-in-out";
+
+    const footerHeight = window.innerHeight * 0.1;
+    const heightPage = document.documentElement.scrollHeight;
+    const currentScroll = window.innerHeight;
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY + currentScroll > heightPage - footerHeight) {
+        footer.classList.add("footer-top");
+        footer.style.transform = "translateY(0)";
+        lastScroll = window.scrollY;
+        return;
+      }
+
+      footer.classList.remove("footer-top");
+
+      if (window.scrollY > lastScroll) {
+        footer.style.transform = "translateY(100%)";
+      } else {
+        footer.style.transform = "translateY(0)";
+      }
+      lastScroll = window.scrollY;
+    });
+  })();
+</script>
+
+<style>
+  .footer-top {
+    all: revert;
+    color: white;
+    padding: 1rem;
+    border-top: 1px solid white;
+  }
+</style>
