@@ -2,7 +2,14 @@
   id="footer"
   class="fixed bottom-0 left-0 z-50 h-10 w-full border-t border-white/20 bg-white/10 shadow-lg backdrop-blur-sm"
 >
-  <div class="h-full">ths is the footer</div>
+  <div class="flex h-full w-full items-center justify-around px-5 text-white">
+    <h3>
+      designed and programed by: <b
+        ><a href="https://darco.vercel.app/" target="_blank">AGP</a></b
+      >
+    </h3>
+    <p>Copyright &copy; {new Date().getFullYear()}</p>
+  </div>
 </main>
 
 <script>
@@ -24,6 +31,8 @@
       }
 
       footer.classList.remove("footer-top");
+      footer.classList.add("border-white/20");
+      footer.classList.add("border-b");
 
       if (window.scrollY > lastScroll) {
         footer.style.transform = "translateY(100%)";
@@ -38,8 +47,6 @@
 <style>
   .footer-top {
     all: revert;
-    color: white;
     padding: 1rem;
-    border-top: 1px solid white;
   }
 </style>
