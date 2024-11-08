@@ -1,23 +1,29 @@
 ---
 import Card from "./Card.astro";
 const items = [
-  { title: "Login", body: "Login to your account" },
-  { title: "Register", body: "Register to your account" },
-  { title: "Cart", body: "View your cart" },
-  { title: "Orders", body: "View your orders" },
-  { title: "Profile", body: "View your profile" },
-  { title: "Logout", body: "Logout from your account" },
-  { title: "Login", body: "Login to your account" },
-  { title: "Register", body: "Register to your account" },
-  { title: "Cart", body: "View your cart" },
-  { title: "Orders", body: "View your orders" },
-  { title: "Profile", body: "View your profile" },
-  { title: "Logout", body: "Logout from your account" },
+  { title: "Login", body: "Login to your account", img: "/kit.jpg" },
+  { title: "Register", body: "Register to your account", img: "/ligth.webp" },
+  { title: "Cart", body: "View your cart", img: "/sticker.webp" },
+  { title: "Orders", body: "View your orders", img: "tools.webp" },
+  { title: "Login", body: "Login to your account", img: "/kit.jpg" },
+  { title: "Register", body: "Register to your account", img: "/ligth.webp" },
+  { title: "Cart", body: "View your cart", img: "/sticker.webp" },
+  { title: "Orders", body: "View your orders", img: "tools.webp" },
 ];
 ---
 
-<main
-  class="auto flex w-full flex-wrap items-center justify-center gap-4 border-2 border-white p-4"
->
-  {items.map((item) => <Card title={item.title} body={item.body} />)}
+<main class="auto flex w-full flex-wrap items-center justify-center gap-4 p-4">
+  {
+    items.map((item) => (
+      <Card title={item.title} body={item.body} img={item.img} />
+    ))
+  }
 </main>
+
+<!-- <div
+  class={`${width ? width : "min-w-64 max-w-64"} ${heigth ? heigth : "min-h-64 max-h-64"}
+  bg-[#23262d] flex bg-cover bg-right-bottom bg-no-repeat shadow-inner transition-all duration-600 ease-in-out hover:bg-gradient-to-r from-white to-red-700 hover:bg-left-top
+  `}
+>
+  <div class="w-full bg-[#23262d] opacity-60"></div>
+</div> -->
