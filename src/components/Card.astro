@@ -13,7 +13,7 @@ const { img, href = "/", title, body, width, heigth } = Astro.props;
 
 <div
   class={`${width ? width : "w-64"} ${heigth ? heigth : "h-64"}
-  relative text-white
+  relative text-white max-sm:w-36 max-sm:h-28
   `}
 >
   <img
