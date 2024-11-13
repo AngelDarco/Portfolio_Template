@@ -1,10 +1,10 @@
 ---
 import Card from "./Card.astro";
 const cards = [
-  { title: "Login", body: "Login to your account", img: "/kit.jpg" },
-  { title: "Register", body: "Register to your account", img: "/ligth.webp" },
-  { title: "Cart", body: "View your cart", img: "/sticker.webp" },
-  { title: "Orders", body: "View your orders", img: "tools.webp" },
+  { title: "Music", img: "image_1.png" },
+  { title: "Lights", img: "image_2.png" },
+  { title: "Tools", img: "image_4.png" },
+  { title: "Stickers", img: "image_5.png" },
 ];
 ---
 
@@ -14,13 +14,7 @@ const cards = [
 >
   {
     cards.map((card) => (
-      <Card
-        img={card.img}
-        title={card.title}
-        body={card.body}
-        width="w-64 min-w-40"
-        heigth="h-28"
-      />
+      <Card img={card.img} title={card.title} styles="w-64 !h-28 min-w-40 " />
     ))
   }
 </main>
