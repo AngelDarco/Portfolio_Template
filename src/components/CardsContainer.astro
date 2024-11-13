@@ -1,23 +1,25 @@
 ---
 import Card from "./Card.astro";
 const items = [
-  { title: "Login", body: "Login to your account", img: "/kit.jpg" },
-  { title: "Register", body: "Register to your account", img: "/ligth.webp" },
-  { title: "Cart", body: "View your cart", img: "/sticker.webp" },
-  { title: "Orders", body: "View your orders", img: "tools.webp" },
-  { title: "Login", body: "Login to your account", img: "/kit.jpg" },
-  { title: "Register", body: "Register to your account", img: "/ligth.webp" },
-  { title: "Cart", body: "View your cart", img: "/sticker.webp" },
-  { title: "Orders", body: "View your orders", img: "tools.webp" },
+  { img: "/image_1.png" },
+  { img: "/image_2.png" },
+  { img: "image_4.png" },
+  { img: "/image_5.png" },
+  { img: "/image_6.png" },
+  { img: "/image_7.png" },
+  { img: "image_8.png" },
+  { img: "/image_1.png" },
+  { img: "/image_2.png" },
+  { img: "image_4.png" },
+  { img: "/image_5.png" },
+  { img: "/image_6.png" },
+  { img: "/image_7.png" },
+  { img: "image_8.png" },
 ];
 ---
 
 <main class="auto flex w-full flex-wrap items-center justify-center gap-4 p-4">
-  {
-    items.map((item) => (
-      <Card title={item.title} body={item.body} img={item.img} />
-    ))
-  }
+  {items.map((item) => <Card img={item.img} icon />)}
 </main>
 
 <!-- <div
