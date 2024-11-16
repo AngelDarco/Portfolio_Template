@@ -1,23 +1,23 @@
 ---
 import Card from "./Card.astro";
 const items = [
-  { title: "Login", body: "Login to your account" },
-  { title: "Register", body: "Register to your account" },
-  { title: "Cart", body: "View your cart" },
-  { title: "Orders", body: "View your orders" },
-  { title: "Profile", body: "View your profile" },
-  { title: "Logout", body: "Logout from your account" },
-  { title: "Login", body: "Login to your account" },
-  { title: "Register", body: "Register to your account" },
-  { title: "Cart", body: "View your cart" },
-  { title: "Orders", body: "View your orders" },
-  { title: "Profile", body: "View your profile" },
-  { title: "Logout", body: "Logout from your account" },
+  { img: "/image_1.png" },
+  { img: "/image_2.png" },
+  { img: "image_4.png" },
+  { img: "/image_5.png" },
+  { img: "/image_6.png" },
+  { img: "/image_7.png" },
+  { img: "image_8.png" },
+  { img: "/image_1.png" },
+  { img: "/image_2.png" },
+  { img: "image_4.png" },
+  { img: "/image_5.png" },
+  { img: "/image_6.png" },
+  { img: "/image_7.png" },
+  { img: "image_8.png" },
 ];
 ---
 
-<main
-  class="auto flex w-full flex-wrap items-center justify-center gap-4 border-2 border-white p-4"
->
-  {items.map((item) => <Card title={item.title} body={item.body} />)}
+<main class="auto flex w-full flex-wrap items-center justify-center gap-4 p-4">
+  {items.map((item) => <Card img={item.img} icon />)}
 </main>

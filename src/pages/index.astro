@@ -1,11 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import CardsContainer from "../components/CardsContainer.astro";
+import Main from "../components/Main.astro";
 import "../../main.css";
+import Carousel from "../components/Carousel.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="flex h-screen w-full flex-col items-center justify-center">
-    <Card title="Login" href="/login" body="Login to your account" />
-  </main>
+  <Main />
+  <Carousel />
+  <CardsContainer />
 </Layout>

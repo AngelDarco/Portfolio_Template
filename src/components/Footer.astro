@@ -1,8 +1,25 @@
 <main
   id="footer"
-  class="fixed bottom-0 left-0 z-50 h-10 w-full border-t border-white/20 bg-white/10 shadow-lg backdrop-blur-sm"
+  class="sticky bottom-0 left-0 z-50 w-full rounded-t-md border-t border-white/20 bg-white/10 pb-4 pt-2 shadow-lg backdrop-blur-sm"
 >
-  <div class="h-full">ths is the footer</div>
+  <div
+    class="flex h-full w-full items-center justify-around px-5 text-white max-sm:flex-col"
+  >
+    <p class="w-full text-left">
+      Copyright &copy; {new Date().getFullYear()}
+    </p>
+    <h3 class="w-full text-right">
+      Programed and designed by: <b
+        ><a
+          class="text-rose-600"
+          href="https://darco.vercel.app/"
+          target="_blank"
+        >
+          agp</a
+        ></b
+      >
+    </h3>
+  </div>
 </main>
 
 <script>
@@ -24,6 +41,8 @@
       }
 
       footer.classList.remove("footer-top");
+      footer.classList.add("border-white/20");
+      footer.classList.add("border-b");
 
       if (window.scrollY > lastScroll) {
         footer.style.transform = "translateY(100%)";
@@ -38,8 +57,6 @@
 <style>
   .footer-top {
     all: revert;
-    color: white;
     padding: 1rem;
-    border-top: 1px solid white;
   }
 </style>
