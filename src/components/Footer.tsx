@@ -14,13 +14,14 @@ export default function Footer() {
     footer.style.transition = "all 0.5s ease-in-out";
 
     if (window.scrollY + currentScroll > heightPage - footerHeight) {
-      footer.style.all = "revert";
-      footer.style.transform = "translateY(0)";
+      // footer.style.all = "revert";
+      footer.classList.add("reset");
+      footer.style.transform = "translateY(0) !important";
       lastScroll = window.scrollY;
       return;
     }
 
-    footer.style.removeProperty("all");
+    footer.classList.remove("reset");
 
     footer.classList.add(
       "border-b",
@@ -48,7 +49,7 @@ export default function Footer() {
       ref={footerRef}
       className="sticky bottom-0 left-0 z-50 w-full border-t border-white/20 bg-white/10  shadow-lg backdrop-blur-sm rounded-t-md"
     >
-      <div className="flex h-full w-full items-center justify-around p-5  max-sm:flex-col">
+      <div className="flex h-full w-full items-center justify-around p-4  max-sm:flex-col">
         <p className="w-full text-left">
           Copyright &copy; {new Date().getFullYear()}
         </p>
