@@ -1,0 +1,19 @@
+#root {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .reset {
+    all: revert !important;
+    width: 100% !important;
+    transition: all 0.5s ease-in-out !important;
+  }
+}
