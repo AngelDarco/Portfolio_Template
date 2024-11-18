@@ -73,11 +73,11 @@ export default function Header() {
     header.style.transition = "all 0.5s ease-in-out";
 
     if (window.scrollY < window.innerHeight * 0.1) {
-      header.style.all = "revert";
+      header.classList.add("reset");
       return;
     }
 
-    header.style.removeProperty("all");
+    header.classList.remove("reset");
 
     header.classList.add(
       "border-b",
@@ -104,7 +104,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="sticky left-0 top-0 z-50 w-full text-white"
+      className="sticky left-0 top-0 z-50 w-full border rounded-b-s text-white"
     >
       <nav>
         <ul className="[&>li>a]:decoration-none ] flex list-none p-4 gap-4 hover:[&>li>a]:underline">
