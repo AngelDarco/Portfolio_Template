@@ -1,28 +1,40 @@
+import React from "react";
+
 interface Props {
   img: string;
-  title?: string;
+  categorie?: string;
   code?: string;
   body?: string;
   styles?: string;
   icon?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export default function Card({ img, title, code, body, styles, icon }: Props) {
+export default function Card({
+  img,
+  categorie,
+  code,
+  body,
+  styles,
+  icon,
+  onClick,
+}: Props) {
   return (
     <div
+      onClick={onClick}
       className={` ${styles} max-md::h-52 relative h-[180px] w-[364px] rounded-lg border border-neutral-800 bg-black text-white hover:border-blue-600 max-md:w-52 max-sm:h-40 max-sm:w-40`}
     >
       <img
         className="h-full w-full object-contain transition-all duration-300 ease-in-out hover:scale-105"
         src={img}
-        alt={title}
+        alt={categorie}
       />
       <div
         className={`absolute bottom-0 left-0 h-11 w-full rounded-lg p-2 ${
-          title && "bg-black/80"
+          categorie && "bg-black/80"
         }`}
       >
-        <h2>{title}</h2>
+        <h2 className="capitalize">{categorie}</h2>
         <p>{body}</p>
         {icon && (
           <a
