@@ -1,16 +1,29 @@
 import { useContext } from "react";
 import Card from "./Card";
-import { context } from "../context/Context";
+import { context, defaultValue } from "../context/Context";
 
 export default function Carousel() {
   const cards = [
-    { title: "Music", img: "image_1.png" },
-    { title: "Lights", img: "image_2.png" },
-    { title: "Tools", img: "image_4.png" },
-    { title: "Stickers", img: "image_5.png" },
+    { categorie: "all", img: "car.png" },
+    { categorie: "bags", img: "image_1.png" },
+    { categorie: "clothes", img: "image_7.png" },
+    { categorie: "caps", img: "image_5.png" },
+    { categorie: "cups", img: "image_6.png" },
   ];
-  const data = useContext(context);
-  console.log(data);
+
+  const { setData } = useContext(context);
+
+  const handlerCategory = (categorie: string) => {
+    const filteredData = defaultValue.filter(
+      (item) => item.categorie === categorie
+    );
+    if (!setData) return;
+    if (categorie === "all") {
+      return setData(defaultValue);
+    }
+    setData(filteredData);
+  };
+
   return (
     <>
       <h1 className="p-4 text-2xl font-bold text-white">Categories</h1>
@@ -19,8 +32,9 @@ export default function Carousel() {
           <Card
             key={index}
             img={card.img}
-            title={card.title}
-            styles="w-64 !h-28 min-w-40 "
+            categorie={card.categorie}
+            styles="w-64 !h-28 min-w-40"
+            onClick={() => handlerCategory(card.categorie)}
           />
         ))}
       </main>
