@@ -1,24 +1,27 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import VanillaTilt from "vanilla-tilt";
 import Typewriter from "typewriter-effect/dist/core";
 
 export default function Main() {
   const tiltRef = useRef(null);
-  if (tiltRef.current) {
-    VanillaTilt.init(tiltRef.current, {
-      speed: 600,
-      perspective: 500,
-    });
-  }
-
   const typewriterRef = useRef(null);
-  if (typewriterRef.current) {
-    new Typewriter(typewriterRef.current, {
-      strings: ["Hello", " world!"],
-      loop: true,
-      autoStart: true,
-    });
-  }
+
+  useEffect(() => {
+    if (tiltRef.current) {
+      VanillaTilt.init(tiltRef.current, {
+        speed: 600,
+        perspective: 500,
+      });
+    }
+
+    if (typewriterRef.current) {
+      new Typewriter(typewriterRef.current, {
+        strings: ["Hello", " world!"],
+        loop: true,
+        autoStart: true,
+      });
+    }
+  }, [tiltRef, typewriterRef]);
 
   return (
     <main className="flex h-screen w-11/12 flex-col-reverse items-center justify-center md:flex-row [&>section]:flex [&>section]:h-full [&>section]:w-full">
