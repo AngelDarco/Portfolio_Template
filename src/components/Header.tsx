@@ -1,66 +1,5 @@
 import { useEffect, useRef } from "react";
-
-{
-  /* <header id="header" className="fixed left-0 top-0 z-50 w-full p-4 text-white">
-  <nav>
-    <ul
-      className="[&>li>a]:decoration-none ] flex list-none gap-4 hover:[&>li>a]:underline"
-    >
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-
-<script>
-  (() => {
-    let lastScroll = 0;
-    const headerHeight = window.innerHeight * 0.1;
-    const header = document.getElementById("header") as HTMLElement;
-    if (!header) return;
-    header.style.transition = "all 0.3s ease-in-out";
-
-    window.addEventListener("scroll", () => {
-      if (window.scrollY < headerHeight) {
-        header.classList.add("header-top");
-        header.style.transform = "translateY(0)";
-        lastScroll = window.scrollY;
-        return;
-      }
-
-      header.classList.remove("header-top");
-
-      header.classList.add("border-b");
-      header.classList.add("border-white/20");
-      header.classList.add("bg-white/10");
-      header.classList.add("p-4");
-      header.classList.add("text-white");
-      header.classList.add("shadow-lg");
-      header.classList.add("backdrop-blur-sm");
-
-      if (window.scrollY < lastScroll) {
-        header.style.transform = "translateY(-100%)";
-      } else {
-        header.style.transform = "translateY(0)";
-      }
-      lastScroll = window.scrollY;
-    });
-  })();
-</script>
-
-<style>
-  .header-top {
-    all: revert;
-    color: white;
-    padding: 1rem;
-    z-index: 50;
-  }
-</style>
- */
-}
+import { Link } from "wouter";
 
 export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
@@ -104,24 +43,39 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="sticky left-0 top-0 z-50 w-full border rounded-b-s text-white"
+      className="sticky left-0 top-0 z-50 w-full rounded-b-s text-white flex justify-around"
     >
       <nav>
         <ul className="[&>li>a]:decoration-none ] flex list-none p-4 gap-4 hover:[&>li>a]:underline">
           <li>
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <a href="/about">About</a>
+            <Link href="/about">About</Link>
           </li>
           <li>
-            <a href="/blog">Blog</a>
+            <Link href="/blog">Blog</Link>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <Link href="/contact">Contact</Link>
           </li>
         </ul>
       </nav>
+      <div className="w-full text-white">
+        <Link href="admin">
+          <svg
+            stroke="currentColor"
+            fill="currentColor"
+            strokeWidth="0"
+            viewBox="0 0 24 24"
+            height="34px"
+            width="34px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M12 14V22H4C4 17.5817 7.58172 14 12 14ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM21 17H22V22H14V17H15V16C15 14.3431 16.3431 13 18 13C19.6569 13 21 14.3431 21 16V17ZM19 17V16C19 15.4477 18.5523 15 18 15C17.4477 15 17 15.4477 17 16V17H19Z"></path>
+          </svg>
+        </Link>
+      </div>
     </header>
   );
 }
