@@ -14,7 +14,6 @@ export default function Footer() {
     footer.style.transition = "all 0.5s ease-in-out";
 
     if (window.scrollY + currentScroll > heightPage - footerHeight) {
-      // footer.style.all = "revert";
       footer.classList.add("reset");
       footer.style.transform = "translateY(0) !important";
       lastScroll = window.scrollY;
