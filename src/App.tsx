@@ -4,20 +4,28 @@ import Footer from "./components/Footer";
 import Main from "./components/Main";
 import CardsContainer from "./components/CardsContainer";
 import Carousel from "./components/Carousel";
-import StoreProvider from "./context/Context";
+import { Route } from "wouter";
+import Admin from "./components/Admin";
 
 function App() {
   return (
-    <div className="flex items-center min-w-96  w-full max-w-5xl  flex-col">
-      <StoreProvider>
-        <Header />
-        <Main />
-        <Carousel />
-        <CardsContainer />
-        <Footer />
-      </StoreProvider>
+    <div className="flex items-center min-w-96  w-full max-w-5xl min-h-dvh flex-col">
+      <Header />
+      <Route path={"/"} component={Home} />
+      <Route path={"/admin/:uid"} component={Admin} />
+      <Footer />
     </div>
   );
 }
+
+const Home = () => {
+  return (
+    <>
+      <Main />
+      <Carousel />
+      <CardsContainer />
+    </>
+  );
+};
 
 export default App;
