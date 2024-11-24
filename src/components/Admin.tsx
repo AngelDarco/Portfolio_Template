@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import Database from "../firebase/functions";
 import { Data } from "../@types";
 import { useParams } from "wouter";
@@ -7,9 +7,10 @@ import { ToastContainer } from "react-toastify";
 
 export default function Admin() {
   const db = new Database();
-  const { get, shower } = db.store();
+  const { get, shower, add } = db.store();
 
   const uid = useParams().uid;
+  const imageRef = useRef(null);
 
   const defaultLocalImg = "image_02.png";
   const defaultDbImg = "/tunning-store/girl.jpg";
@@ -18,6 +19,7 @@ export default function Admin() {
 
   useEffect(() => {
     get(defaultDbImg, setImg);
+    db.readDb((data) => console.log(data));
     // eslint-disable-next-line
   }, []);
 
@@ -41,14 +43,15 @@ export default function Admin() {
     if (res.length === Object.values(data).length) return data;
   }
 
-  const handlerUpdate = (e: FormEvent) => {
+  const handlerUpdate = async (e: FormEvent) => {
     e.preventDefault();
     const data = formValidation(e);
     if (!data) return;
 
-    console.log(data);
-    // if (typeof uid === "string" && uid !== "add") {
-    // }
+    const image = await add(data.image as File);
+
+    if (typeof image === "string" && image !== "")
+      db.writeDb({ ...data, img: image }).then(() => Notify.success("Saved"));
   };
 
   return (
@@ -65,6 +68,7 @@ export default function Admin() {
           className="flex flex-col h-full gap-4 w-full [&>label>input]:rounded-md [&>label>input]:p-1 [&>label]:h-9 [&>label>input]:h-full "
         >
           <input
+            ref={imageRef}
             type="file"
             name="image"
             accept="image/jpg"
@@ -85,7 +89,7 @@ export default function Admin() {
               placeholder="Password"
             />
           </label>
-          <button>Update</button>
+          <button>{!uid ? "Update" : "Add"}</button>
         </form>
       </main>
       <ToastContainer />
