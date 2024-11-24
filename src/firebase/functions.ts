@@ -41,12 +41,11 @@ export default class Database {
       }
     }
 
-    function add(file: File) {
+    function add(file: File, path: string) {
       return new Promise((resolve) => {
-        // const dataFile = file.files[0];
-        if (!file) return;
+        if (!file) return resolve("file not found");
 
-        const img = refStore(storage, "/tunning-store/" + file.name);
+        const img = refStore(storage, path);
 
         const uploadTask = uploadBytesResumable(img, file);
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -58,31 +57,35 @@ export default class Database {
     function get(name: string, fn: (s: string) => void) {
       const imgRefStoreerence = refStore(storage, name);
       getDownloadURL(imgRefStoreerence)
-        .then((url) => {
-          fn(url);
-        })
+        .then((url) => fn(url))
         .catch((err) => console.log(err));
     }
 
     return { add, get, shower };
   }
 
-  readDb(fn: (d: Data) => void) {
-    const dbReference = ref(this.database, "products/");
-    onValue(dbReference, (snapshot) => {
-      const data = snapshot.val();
-      fn(data);
+  readDb(path: string): Promise<Data[] | string> {
+    return new Promise((resolve, reject) => {
+      const dbReference = ref(this.database, path);
+      onValue(dbReference, (snapshot) => {
+        if (snapshot.val() === null) return reject("no data found");
+        const data = Object.values(snapshot.val());
+        resolve(data as Data[]);
+      });
     });
   }
 
-  writeDb(data: Data) {
-    return new Promise((resolve) => {
+  writeDb(data: Data, path: string): Promise<boolean | string> {
+    return new Promise((resolve, reject) => {
       const uid = crypto.randomUUID();
       const db = getDatabase();
-      set(ref(db, "products/" + uid), {
+
+      set(ref(db, path + uid), {
         ...data,
         uid,
-      }).then(() => resolve(true));
+      })
+        .then(() => resolve(true))
+        .catch((err) => reject(err));
     });
   }
 }
