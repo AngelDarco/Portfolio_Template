@@ -1,3 +1,5 @@
 export type Data = {
-  [key: string]: string | File;
+  uid: string;
+  img: string | File;
+  categorie: string;
 };
