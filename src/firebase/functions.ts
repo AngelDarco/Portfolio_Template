@@ -12,13 +12,14 @@ import {
 import {
   Database as DatabaseTypes,
   getDatabase,
+  onValue,
   ref,
   set,
 } from "firebase/database";
 
 export default class Database {
-  app: FirebaseAppSettings;
-  database: DatabaseTypes;
+  private app: FirebaseAppSettings;
+  private database: DatabaseTypes;
   constructor() {
     this.app = app;
     this.database = getDatabase();
@@ -40,15 +41,17 @@ export default class Database {
       }
     }
 
-    function add(file: File, fn: (s: string) => void) {
-      const dataFile = file.files[0];
-      if (!file) return;
+    function add(file: File) {
+      return new Promise((resolve) => {
+        // const dataFile = file.files[0];
+        if (!file) return;
 
-      const img = refStore(storage, "/tunning-store/" + dataFile.name);
+        const img = refStore(storage, "/tunning-store/" + file.name);
 
-      const uploadTask = uploadBytesResumable(img, dataFile);
-      getDownloadURL(uploadTask.snapshot.refStore).then((downloadURL) => {
-        fn(downloadURL);
+        const uploadTask = uploadBytesResumable(img, file);
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          resolve(downloadURL);
+        });
       });
     }
 
@@ -64,14 +67,22 @@ export default class Database {
     return { add, get, shower };
   }
 
-  readDb() {}
+  readDb(fn: (d: Data) => void) {
+    const dbReference = ref(this.database, "products/");
+    onValue(dbReference, (snapshot) => {
+      const data = snapshot.val();
+      fn(data);
+    });
+  }
 
   writeDb(data: Data) {
-    const uid = crypto.randomUUID();
-    const db = getDatabase();
-    set(ref(db, uid), {
-      ...data,
-      uid,
+    return new Promise((resolve) => {
+      const uid = crypto.randomUUID();
+      const db = getDatabase();
+      set(ref(db, "products/" + uid), {
+        ...data,
+        uid,
+      }).then(() => resolve(true));
     });
   }
 }
