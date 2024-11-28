@@ -8,6 +8,7 @@ interface Card {
   styles?: string;
   icon?: boolean;
   admin?: boolean;
+  section: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -19,6 +20,7 @@ export default function Card({
   styles,
   icon,
   admin,
+  section,
   onClick,
 }: Card) {
   return (
@@ -27,7 +29,7 @@ export default function Card({
       className={` ${styles} max-md::h-52 relative h-[180px] w-[364px] rounded-lg border border-neutral-800 bg-black text-white hover:border-blue-600 max-md:w-52 max-sm:h-40 max-sm:w-40`}
     >
       {admin && (
-        <Link href={`/admin/${uid}`}>
+        <Link href={`/admin/${section ? `${section}/${uid}` : `${uid}`}`}>
           <svg
             stroke="currentColor"
             fill="currentColor"
