@@ -1,26 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import Database from "../firebase/realtime-db";
+import Notify from "../utils/Notify";
 
 interface Data {
-  uid:string;
+  uid: string;
   img: string;
   categorie: string;
 }
 
 export const defaultValue: Data[] = [
-  {uid: "01", img: "/image_1.png", categorie: "bags" },
-  {uid: "02", img: "/image_2.png", categorie: "clothes" },
-  {uid: "03", img: "image_4.png", categorie: "clothes" },
-  {uid: "04", img: "/image_5.png", categorie: "caps" },
-  {uid: "05", img: "/image_6.png", categorie: "cups" },
-  {uid: "06", img: "/image_7.png", categorie: "clothes" },
-  {uid: "07", img: "image_8.png", categorie: "cups" },
-  {uid: "08", img: "/image_1.png", categorie: "bags" },
-  {uid: "09", img: "/image_2.png", categorie: "clothes" },
-  {uid: "10", img: "image_4.png", categorie: "clothes" },
-  {uid: "11", img: "/image_5.png", categorie: "caps" },
-  {uid: "12", img: "/image_6.png", categorie: "cups" },
-  {uid: "13", img: "/image_7.png", categorie: "clothes" },
-  {uid: "14", img: "image_8.png", categorie: "cups" },
+  { uid: "01", img: "/image_1.png", categorie: "bags" },
+  { uid: "02", img: "/image_2.png", categorie: "clothes" },
+  { uid: "03", img: "image_4.png", categorie: "clothes" },
+  { uid: "04", img: "/image_5.png", categorie: "caps" },
+  { uid: "05", img: "/image_6.png", categorie: "cups" },
+  { uid: "06", img: "/image_7.png", categorie: "clothes" },
+  { uid: "07", img: "image_8.png", categorie: "cups" },
+  { uid: "08", img: "/image_1.png", categorie: "bags" },
+  { uid: "09", img: "/image_2.png", categorie: "clothes" },
+  { uid: "10", img: "image_4.png", categorie: "clothes" },
+  { uid: "11", img: "/image_5.png", categorie: "caps" },
+  { uid: "12", img: "/image_6.png", categorie: "cups" },
+  { uid: "13", img: "/image_7.png", categorie: "clothes" },
+  { uid: "14", img: "image_8.png", categorie: "cups" },
 ];
 
 interface Context {
@@ -32,6 +34,18 @@ export const context = createContext<Context>({ data: defaultValue });
 
 export default function StoreProvider({ children }: { children: JSX.Element }) {
   const [data, setData] = useState(defaultValue);
+  const db = new Database();
+  const PRODUCTS_PATH = "products/";
+
+  useEffect(() => {
+    // "/tunning-store/" + file.name
+    db.read(PRODUCTS_PATH)
+      .then((data) => {
+        if (typeof data === "string") return Notify.error(data);
+        setData(data);
+      })
+      .catch((err) => Notify.error(err.message));
+  }, []);
   return (
     <context.Provider value={{ data, setData }}>{children}</context.Provider>
   );
