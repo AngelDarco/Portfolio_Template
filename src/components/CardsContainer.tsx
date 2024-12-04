@@ -8,8 +8,15 @@ export default function CardsContainer() {
   return (
     <main className="flex w-full min-h-dvh flex-wrap justify-center  gap-4 p-4">
       {data &&
-        data.map((item, index) => (
-          <Card key={index} img={item.img} icon admin uid={item.uid} />
+        data.map((item) => (
+          <Card
+            key={item.uid}
+            img={item.img}
+            icon
+            admin
+            uid={item.uid}
+            section="products"
+          />
         ))}
     </main>
   );
