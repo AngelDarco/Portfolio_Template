@@ -27,9 +27,9 @@ export default function Carousel() {
   };
 
   return (
-    <>
+    <section className="flex flex-col w-full px-4">
       <h1 className="p-4 text-2xl font-bold text-white">Categories</h1>
-      <main className="no-scrollbar h-62 mb-14 flex w-full items-center justify-center gap-5 overflow-x-scroll relative">
+      <main className="no-scrollbar h-62 mb-14 flex w-full items-center justify-items-start gap-5 overflow-x-scroll relative">
         <Link
           href="admin/categories/add"
           className="absolute z-10 top-4 left-4"
@@ -48,6 +48,6 @@ export default function Carousel() {
           />
         ))}
       </main>
-    </>
+    </section>
   );
 }
