@@ -1,57 +1,89 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import Database from "../firebase/functions";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import Database from "../firebase/realtime-db";
 import { Data } from "../@types";
 import { useParams } from "wouter";
-import Notify from "../utils/notify";
+import Notify from "../utils/Notify";
 import { ToastContainer } from "react-toastify";
+import UuidChecker from "../utils/UuidChecker";
+import Store from "../firebase/store";
 
 export default function Admin() {
   const db = new Database();
-  const { get, shower, add } = db.store();
 
   const uid = useParams().uid;
-  const imageRef = useRef(null);
+  const section = useParams().section;
 
-  const defaultLocalImg = "image_02.png";
-  const defaultDbImg = "/tunning-store/girl.jpg";
+  const PATH_DB = `${section}/${uid}`;
+  const DEFAULT_LOCAL_IMG = "/image_2.png";
 
-  const [img, setImg] = useState(defaultLocalImg);
+  const [img, setImg] = useState(DEFAULT_LOCAL_IMG);
+  const [data, setData] = useState<Data>();
 
   useEffect(() => {
-    get(defaultDbImg, setImg);
-    db.readDb((data) => console.log(data));
+    if (!UuidChecker.isValid(uid)) return;
+    Store.get(PATH_DB, setImg);
+    db.read(PATH_DB)
+      .then((data) => {
+        Object.values(data).forEach((value) => {
+          if (value.uid === uid) setData(value);
+        });
+      })
+      .catch((err) => Notify.error(err));
     // eslint-disable-next-line
   }, []);
 
   const handlerFile = (file: ChangeEvent) => {
-    shower(file, setImg);
+    Store.viewer(file, setImg);
   };
 
-  function formValidation(e: FormEvent) {
+  function formValidation(e: FormEvent): Data | undefined {
     const form = new FormData(e.target as HTMLFormElement);
     const formData = Object.fromEntries(form.entries());
+    const data: { [key: string]: FormDataEntryValue } = {};
 
-    const data: Data = {};
-
-    const res = Object.entries(formData).map(([key, value]) => {
-      if (value === "" || (key === "image" && (value as File).name === ""))
-        return Notify.error(`${key} is required`);
-
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value === "" || (value as File).name === "") {
+        Notify.error(`${key} is required`);
+        return;
+      }
       data[key] = value;
     });
-
-    if (res.length === Object.values(data).length) return data;
+    if (Object.values(data).length === Object.values(formData).length)
+      return data as Data;
   }
 
   const handlerUpdate = async (e: FormEvent) => {
     e.preventDefault();
-    const data = formValidation(e);
-    if (!data) return;
+    Notify.promise(
+      (async () => {
+        const data = formValidation(e);
+        if (!data) return;
 
-    const image = await add(data.image as File);
+        if (data.img instanceof File) {
+          const PATH_STORAGE = `${section}`;
+          const img = await Store.add(data.img, PATH_STORAGE);
 
-    if (typeof image === "string" && image !== "")
-      db.writeDb({ ...data, img: image }).then(() => Notify.success("Saved"));
+          if (typeof img === "string")
+            return db
+              .write({ ...data, img }, PATH_STORAGE, Store.uuid)
+              .then(() => {
+                (e.target as HTMLFormElement).reset();
+                setImg(DEFAULT_LOCAL_IMG);
+              })
+              .catch((err) => Notify.error(err.message));
+        }
+
+        const PATH_DB = section;
+        if (PATH_DB && uid && data)
+          db.write(data, PATH_DB, uid)
+            .then(() => {
+              (e.target as HTMLFormElement).reset();
+              setImg(DEFAULT_LOCAL_IMG);
+            })
+            .catch((err) => Notify.error(err.message));
+      })(),
+      "updating..."
+    );
   };
 
   return (
@@ -68,25 +100,18 @@ export default function Admin() {
           className="flex flex-col h-full gap-4 w-full [&>label>input]:rounded-md [&>label>input]:p-1 [&>label]:h-9 [&>label>input]:h-full "
         >
           <input
-            ref={imageRef}
             type="file"
-            name="image"
-            accept="image/jpg"
+            name="img"
+            accept="image/jpg, image/jpeg, image/png, image/webp"
             onChange={handlerFile}
             disabled={uid === "add" ? false : true}
           />
-          <label htmlFor="name">
-            <input type="text" name="name" id="name" placeholder="Name" />
-          </label>
-          <label htmlFor="email">
-            <input type="email" name="email" id="email" placeholder="Email" />
-          </label>
-          <label htmlFor="password">
+          <label htmlFor="categorie">
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
+              type="text"
+              name="categorie"
+              placeholder="Categorie"
+              defaultValue={data && data.categorie}
             />
           </label>
           <button>{!uid ? "Update" : "Add"}</button>
