@@ -26,10 +26,13 @@ export default function Card({
   return (
     <div
       onClick={onClick}
-      className={` ${styles} max-md::h-52 relative h-[180px] w-[364px] rounded-lg border border-neutral-800 bg-black text-white hover:border-blue-600 max-md:w-52 max-sm:h-40 max-sm:w-40`}
+      className={` ${styles} max-md::h-52 relative h-[180px] w-[364px] rounded-lg border border-neutral-800 bg-black text-white hover:border-blue-600 max-md:w-52 max-sm:h-40 max-sm:w-40 transition-all duration-300 ease-in-out hover:scale-105`}
     >
       {admin && (
-        <Link href={`/admin/${section ? `${section}/${uid}` : `${uid}`}`}>
+        <Link
+          href={`/admin/${section ? `${section}/${uid}` : `${uid}`}`}
+          className="absolute top-4 right-4"
+        >
           <svg
             stroke="currentColor"
             fill="currentColor"
@@ -42,11 +45,7 @@ export default function Card({
           </svg>
         </Link>
       )}
-      <img
-        className="h-full w-full object-contain transition-all duration-300 ease-in-out hover:scale-105"
-        src={img}
-        alt={categorie}
-      />
+      <img className="h-full w-full object-contain" src={img} alt={categorie} />
       <div
         className={`absolute bottom-0 left-0 h-11 w-full rounded-lg p-2 ${
           categorie && "bg-black/80"
