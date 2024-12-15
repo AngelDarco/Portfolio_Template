@@ -26,7 +26,7 @@ export default function Carousel() {
   };
 
   return (
-    <section className="flex flex-col w-full px-4 relative border border-white/10 rounded-md mb-10">
+    <section className="flex flex-col w-full px-4 relative border border-white/10 rounded-md">
       <h1 className="p-4 text-2xl font-bold text-white">Categories</h1>
       <main className="no-scrollbar h-40 px-3 py-2 mb-14 flex w-full items-center justify-items-start gap-5 overflow-x-scroll bg-white/10 rounded-md">
         <Link
