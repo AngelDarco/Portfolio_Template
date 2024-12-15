@@ -1,38 +1,37 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Card from "./Card";
-import { context, defaultValue } from "../context/Context";
+import { context } from "../context/Context";
 import Add from "/add.svg";
 import { Link } from "wouter";
+import { Data } from "../@types";
 
 export default function Carousel() {
-  const cards = [
-    { categorie: "all", img: "car.png" },
-    { categorie: "bags", img: "image_1.png" },
-    { categorie: "clothes", img: "image_7.png" },
-    { categorie: "caps", img: "image_5.png" },
-    { categorie: "cups", img: "image_6.png" },
-  ];
+  const [cards, setCards] = useState<Data[]>([]);
+  const { setData, dataRef, categories } = useContext(context);
 
-  const { setData } = useContext(context);
+  useEffect(() => {
+    setCards(categories);
+  }, [categories]);
 
   const handlerCategory = (categorie: string) => {
-    const filteredData = defaultValue.filter(
-      (item) => item.categorie === categorie
-    );
     if (!setData) return;
-    if (categorie === "all") {
-      return setData(defaultValue);
+    if (Object.entries(dataRef).length > 0) {
+      const filteredData = dataRef.filter(
+        (item) => item.categorie === categorie
+      );
+      setData(filteredData);
     }
-    setData(filteredData);
+
+    if (categorie === "all") return setData(dataRef);
   };
 
   return (
-    <section className="flex flex-col w-full px-4">
+    <section className="flex flex-col w-full px-4 relative border border-white/10 rounded-md mb-10">
       <h1 className="p-4 text-2xl font-bold text-white">Categories</h1>
-      <main className="no-scrollbar h-62 mb-14 flex w-full items-center justify-items-start gap-5 overflow-x-scroll relative">
+      <main className="no-scrollbar h-40 px-3 py-2 mb-14 flex w-full items-center justify-items-start gap-5 overflow-x-scroll bg-white/10 rounded-md">
         <Link
           href="admin/categories/add"
-          className="absolute z-10 top-4 left-4"
+          className="absolute z-10 top-6 right-6"
         >
           <img src={Add} alt="" />
         </Link>
@@ -43,7 +42,7 @@ export default function Carousel() {
             img={card.img}
             categorie={card.categorie}
             section="categories"
-            styles="w-64 !h-28 min-w-40"
+            styles="w-64 !h-full min-w-40"
             onClick={() => handlerCategory(card.categorie)}
           />
         ))}
