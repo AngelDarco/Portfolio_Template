@@ -12,7 +12,7 @@ function App() {
     <div className="flex items-center min-w-96  w-full max-w-5xl min-h-dvh flex-col">
       <Header />
       <Route path={"/"} component={Home} />
-      <Route path={"/admin/:uid"} component={Admin} />
+      <Route path={"/admin/:section/:uid"} component={Admin} />
       <Footer />
     </div>
   );

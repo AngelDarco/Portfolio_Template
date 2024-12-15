@@ -29,4 +29,18 @@ export default class Notify {
       transition: Bounce,
     });
   }
+
+  static promise(callback: Promise<void>, message: string) {
+    toast.promise(
+      callback,
+      {
+        pending: message,
+        success: "🦄 all done",
+        error: "🦄 ups, something went wrong",
+      },
+      {
+        autoClose: 2000,
+      }
+    );
+  }
 }
