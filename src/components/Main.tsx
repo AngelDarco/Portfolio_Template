@@ -24,7 +24,7 @@ export default function Main() {
   }, [tiltRef, typewriterRef]);
 
   return (
-    <main className="flex h-screen w-11/12 flex-col-reverse items-center justify-center md:flex-row [&>section]:flex [&>section]:h-full [&>section]:w-full">
+    <main className="flex h-screen w-full -mt-8 flex-col-reverse items-center justify-center rounded-md border border-white/10 md:flex-row [&>section]:flex [&>section]:h-full [&>section]:w-full">
       <section className="flex items-center">
         <img ref={tiltRef} src="/car.png" alt="main-img" />
       </section>
