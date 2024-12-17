@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import Add from "/add.svg";
 
 export default function Header() {
@@ -39,13 +39,17 @@ export default function Header() {
   useEffect(() => {
     window.addEventListener("scroll", ScrollListener);
     return () => window.removeEventListener("scroll", ScrollListener);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
+
+  const [path] = useLocation();
 
   return (
     <header
       ref={headerRef}
-      className="sticky left-0 top-0 z-50 w-full rounded-b-s text-white flex justify-around"
+      className={`${
+        path === "/" ? "sticky" : "absolute"
+      } left-0 top-0 z-50 w-full rounded-b-s text-white flex justify-around`}
     >
       <nav>
         <ul className="[&>li>a]:decoration-none ] flex list-none p-4 gap-4 hover:[&>li>a]:underline">
