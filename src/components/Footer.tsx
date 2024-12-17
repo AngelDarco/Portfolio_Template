@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "wouter";
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   let lastScroll = 0;
+  const [path] = useLocation();
 
   const ScrollListener = () => {
     const footer = footerRef.current;
@@ -9,7 +11,7 @@ export default function Footer() {
     const heightPage = document.documentElement.scrollHeight;
     const footerHeight = window.innerHeight * 0.1;
 
-    if (!footer) return;
+    if (path !== "/" || !footer) return;
 
     footer.style.transition = "all 0.5s ease-in-out";
 
@@ -27,7 +29,9 @@ export default function Footer() {
       "border-white/20",
       "bg-white/10",
       "shadow-lg",
-      "backdrop-blur-sm"
+      "backdrop-blur-sm",
+      "border-t",
+      "rounded-t-md"
     );
 
     if (window.scrollY > lastScroll) {
@@ -41,12 +45,14 @@ export default function Footer() {
   useEffect(() => {
     window.addEventListener("scroll", ScrollListener);
     return () => window.removeEventListener("scroll", ScrollListener);
-  }, []);
+    // eslint-disable-next-line
+  }, [path]);
 
   return (
-    <main
+    <footer
       ref={footerRef}
-      className="sticky bottom-0 left-0 z-50 w-full border-t border-white/20 bg-white/10  shadow-lg backdrop-blur-sm rounded-t-md"
+      className={`${path !== "/" ? "footer" : "sticky"}
+      bottom-0 z-50 w-full `}
     >
       <div className="flex h-full w-full items-center justify-around p-4  max-sm:flex-col">
         <p className="w-full text-left">
@@ -65,6 +71,6 @@ export default function Footer() {
           </b>
         </h3>
       </div>
-    </main>
+    </footer>
   );
 }
