@@ -1,6 +1,6 @@
 import { app } from "./config";
 import { FirebaseAppSettings } from "firebase/app";
-import { Data } from "../@types";
+import type { FormData } from "../@types";
 
 import {
   Database as DatabaseTypes,
@@ -18,19 +18,19 @@ export default class RealTimeDB {
     this.database = getDatabase();
   }
 
-  read(path: string): Promise<Data[] | string> {
+  read(path: string): Promise<FormData[] | string> {
     return new Promise((resolve, reject) => {
       const dbReference = ref(this.database, path);
       onValue(dbReference, (snapshot) => {
         if (snapshot.val() === null) return reject("no data found");
         const data = Object.values(snapshot.val());
-        resolve(data as Data[]);
+        resolve(data as FormData[]);
       });
     });
   }
 
   async write(
-    data: Data,
+    data: FormData,
     path: string,
     uid: string
   ): Promise<boolean | string> {
