@@ -1,11 +1,17 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Database from "../firebase/realtime-db";
-import { Data } from "../@types";
 import { useParams } from "wouter";
 import Notify from "../utils/Notify";
 import { ToastContainer } from "react-toastify";
 import UuidChecker from "../utils/UuidChecker";
 import Store from "../firebase/store";
+// import type { Data } from "../@types";
+
+type FormData = {
+  uid: string;
+  img: string | File;
+  categorie: string;
+};
 
 export default function Admin() {
   const db = new Database();
@@ -17,7 +23,7 @@ export default function Admin() {
   const DEFAULT_LOCAL_IMG = "/image_2.png";
 
   const [img, setImg] = useState(DEFAULT_LOCAL_IMG);
-  const [data, setData] = useState<Data>();
+  const [data, setData] = useState<FormData>();
 
   useEffect(() => {
     if (!UuidChecker.isValid(uid)) return;
@@ -36,7 +42,7 @@ export default function Admin() {
     Store.viewer(file, setImg);
   };
 
-  function formValidation(e: FormEvent): Data | undefined {
+  function formValidation(e: FormEvent): FormData | undefined {
     const form = new FormData(e.target as HTMLFormElement);
     const formData = Object.fromEntries(form.entries());
     const data: { [key: string]: FormDataEntryValue } = {};
@@ -46,10 +52,10 @@ export default function Admin() {
         Notify.error(`${key} is required`);
         return;
       }
-      data[key] = value;
+      data[key] = (value as string).toLocaleLowerCase();
     });
     if (Object.values(data).length === Object.values(formData).length)
-      return data as Data;
+      return data as FormData;
   }
 
   const handlerUpdate = async (e: FormEvent) => {
@@ -87,7 +93,7 @@ export default function Admin() {
   };
 
   return (
-    <section className="flex w-full flex-col gap-4  h-screen border">
+    <section className="flex w-full flex-col gap-4">
       <h1 className="text-3xl text-center text-white">Admin board</h1>
 
       <main className="flex h-full gap-4">
