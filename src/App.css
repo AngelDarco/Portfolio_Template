@@ -17,4 +17,11 @@
     display: flex !important;
     transition: all 0.5s ease-in-out !important;
   }
+  .header {
+    position: sticky !important;
+  }
+  .footer {
+    position: absolute !important;
+    bottom: 0 !important;
+  }
 }
