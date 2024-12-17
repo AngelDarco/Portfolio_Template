@@ -6,7 +6,7 @@ export default function CardsContainer() {
   const { data } = useContext(context);
 
   return (
-    <main className="flex w-full min-h-dvh flex-wrap justify-center border border-white/10 rounded-md gap-4 p-4">
+    <main className="flex w-full min-h-dvh flex-wrap justify-center gap-4 p-4">
       {data &&
         data.map((item) => (
           <Card
